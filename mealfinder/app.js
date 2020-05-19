@@ -141,3 +141,10 @@ mealsEL.addEventListener('click',e=>{
     }
 })
 
+window.addEventListener('click',removeModal)
+
+function removeModal(e){
+    if(e.target.parentElement.className==='close-btn'){
+       console.log(e.target.parentElement.parentElement.parentElement.remove()) 
+    }
+}
