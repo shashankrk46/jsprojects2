@@ -4,6 +4,7 @@ const random=document.getElementById('random');
 const mealsEL=document.getElementById('meals');
 const resultHeading=document.getElementById('result-heading');
 const singleMealEL=document.getElementById('single-meal');
+const modal=document.getElementById('modal');
 
 
 // saerch meal and fetch from api
@@ -87,6 +88,11 @@ function addMealToDOM(meal){
     }
     
     singleMealEL.innerHTML=`
+    <div class="modal-container" id="modal">
+    <div class="modal">
+    <button class="close-btn" id="close">
+    <i class="fa fa-times"></i>
+    </button>
     <div class="single-meal">
     <h1>${meal.strMeal}</h1>
     <img src="${meal.strMealThumb}" alt="${meal.strMeal}"/>
@@ -103,7 +109,8 @@ function addMealToDOM(meal){
     ${ingredients.map(ing=>
         `<li>${ing}</li>`).join('')}
     </div>
-
+    </div>
+    </div>
     </div>`;
 
 
@@ -127,7 +134,9 @@ mealsEL.addEventListener('click',e=>{
      console.log(mealInfo)
     if(mealInfo){
         const mealID=mealInfo.getAttribute('data-mealid');
-        getMealById(mealID)
+        getMealById(mealID);
+       
+
        
     }
 })
