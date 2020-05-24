@@ -54,6 +54,12 @@ input[type="text"]{
    /* border-radius: 5px; */
 }
 
+.opt{
+   margin-top: 15px;
+   width:100px
+   
+}
+
 
 .meals{
     display: grid;
