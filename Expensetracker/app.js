@@ -16,6 +16,7 @@ const amount=document.getElementById('amount');
 const localStorageTransactions=JSON.parse(localStorage.getItem('transactions'))
 
 let transactions=localStorage.getItem('transactions')!==null?localStorageTransactions:[];
+console.log(transactions)
 
 // add transcation
 function addTransactions(e){
@@ -31,6 +32,7 @@ else{
       }
       transactions.push(transaction);
       addTransactionsDom(transaction);
+     
 
       updateValues();
 
@@ -58,8 +60,9 @@ function addTransactionsDom(transaction){
     // add class based on value
     item.classList.add(transaction.amount<0?'minus':'plus');
 
-    item.innerHTML=`
-    ${transaction.text}<span>${sign}${Math.abs(transaction.amount)}</span>
+    item.innerHTML=`<span class="txt">
+    ${transaction.text}</span> <span class="id">
+    ${transaction.id}</span> <span class="amt">${sign}${Math.abs(transaction.amount)}</span>
     <button class="delete-btn" onclick="removeTransactions(${transaction.id})">x</button
     `;
 
@@ -105,16 +108,99 @@ function removeTransactions(id){
     init();
 }
 
+// function updateItems(transactions){
+//     list.addEventListener('click',getIds)
+//     console.log(transactions.id)
+   
+// }
+list.addEventListener('click',getIds)
+
+function getIds(e){
+    console.log(e.target)
+    // console.log(e.target.classList.contains('txt'));
+    // const sortByIds=transactions.map(trans=>trans.id);
+
+    if(e.target.className==='id'){
+        const idTarget=+e.target.textContent;
+        console.log(idTarget);
+
+        let found=null;
+        transactions.forEach(item=>{
+            if(item.id===idTarget){
+                console.log(found=item)
+                found=item
+            }
+            return found;
+        });
+        // return found;
+        console.log(found.amount);
+        text.value=found.text;
+        amount.value=found.amount;
+       
+        updateItemsSubmit(text.value,amount.value)
+ // const sortByIds=transactions.map(trans=>
+        //     trans.id);
+        //     console.log(sortByIds)
+
+        // if(sortByIds.includes(idTarget)){
+        //     console.log('yes');
+        // }
+    }
+    
+    // if(e.target.classList.contains('txt') || e.target.classList.contains('amt') || e.target.classList.contains('id') ){
+    //     if(e.target.className==='id'|| e.target.className==='txt' ||  e.target.className==='amt'){
+    //         console.log(e.target.textContent)
+    //     }
+    // }
+    // console.log(transactions[0].id)
+    // const sortByIds=transactions.map(trans=>trans.id);
+    // console.log(sortByIds)
+   
+    // console.log(transactions.sort(trans=>
+    //      trans.text
+    // ))
+}
+
+function updateItemsSubmit(text,amount){
+    let found =null;
+
+    transactions.forEach(item=>{
+        if(item.id===transactions.id){
+            item.text=text;
+            item.amount=amount;
+            found=item;
+        }
+    })
+    return found;
+}
+
+const updateTransactions=function(e){
+
+   updateItemsSubmit(text,amount)
+    e.preventDefault();
+
+}
 // update ls transactions
  function updateLocalStorage(){
      localStorage.setItem('transactions',JSON.stringify(transactions))
  }
+
+
+
+
 
 // init app
 function init(){
     list.innerHTML='';
 
     transactions.forEach(addTransactionsDom);
+    document.addEventListener('keypress',function(e){
+        if(e.keyCode===13 || e.which===13){
+            e.preventDefault();
+            return false;
+        }
+    })
+    // transactions.forEach(updateTransactions);
     updateValues();
 
 }
@@ -122,6 +208,7 @@ function init(){
 init();
 
 form.addEventListener('submit',addTransactions)
+form.addEventListener('submit',updateTransactions)
 
 
 
