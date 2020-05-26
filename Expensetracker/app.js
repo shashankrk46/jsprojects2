@@ -5,6 +5,8 @@ const list=document.getElementById('list');
 const form=document.getElementById('form');
 const text=document.getElementById('text');
 const amount=document.getElementById('amount');
+// const updateBtn=document.getElementsByClassName('btn');
+// const btn=document.getElementsByClassName('updateBtn');
 
 // const dummyTrans=[
 //     {id:1,text:'flower',amount:-20},
@@ -59,10 +61,11 @@ function addTransactionsDom(transaction){
     const item=document.createElement('li');
     // add class based on value
     item.classList.add(transaction.amount<0?'minus':'plus');
+    item.id=`${transaction.id}`;
 
     item.innerHTML=`<span class="txt">
-    ${transaction.text}</span> <span class="id">
-    ${transaction.id}</span> <span class="amt">${sign}${Math.abs(transaction.amount)}</span>
+    ${transaction.text}</span>  <span class="amt">${sign}${Math.abs(transaction.amount)}</span>
+    <a href='#'> <i class="edit-item fa fa-pencil"></i> </a>
     <button class="delete-btn" onclick="removeTransactions(${transaction.id})">x</button
     `;
 
@@ -113,52 +116,39 @@ function removeTransactions(id){
 //     console.log(transactions.id)
    
 // }
-list.addEventListener('click',getIds)
+list.addEventListener('click',editItems)
 
-function getIds(e){
-    console.log(e.target)
-    // console.log(e.target.classList.contains('txt'));
-    // const sortByIds=transactions.map(trans=>trans.id);
-
-    if(e.target.className==='id'){
-        const idTarget=+e.target.textContent;
-        console.log(idTarget);
-
-        let found=null;
-        transactions.forEach(item=>{
-            if(item.id===idTarget){
-                console.log(found=item)
-                found=item
-            }
-            return found;
+function editItems(e){
+  console.log(e.target)
+  if(e.target.classList.contains('edit-item')){
+      const id=+e.target.parentNode.parentNode.id;
+      
+     
+      let found=null;
+      transactions.forEach(item=>{
+          
+         if(item.id===id){
+             found=item;
+        }
+         return found;
         });
-        // return found;
-        console.log(found.amount);
-        text.value=found.text;
-        amount.value=found.amount;
-       
-        updateItemsSubmit(text.value,amount.value)
- // const sortByIds=transactions.map(trans=>
-        //     trans.id);
-        //     console.log(sortByIds)
-
-        // if(sortByIds.includes(idTarget)){
-        //     console.log('yes');
-        // }
-    }
+        
     
-    // if(e.target.classList.contains('txt') || e.target.classList.contains('amt') || e.target.classList.contains('id') ){
-    //     if(e.target.className==='id'|| e.target.className==='txt' ||  e.target.className==='amt'){
-    //         console.log(e.target.textContent)
-    //     }
-    // }
-    // console.log(transactions[0].id)
-    // const sortByIds=transactions.map(trans=>trans.id);
-    // console.log(sortByIds)
-   
-    // console.log(transactions.sort(trans=>
-    //      trans.text
-    // ))
+    console.log(found);
+    text.value=found.text;
+    amount.value=found.amount;
+
+    // console.log(btn.className)
+
+    document.querySelector('.btn').style.display='none';
+    document.querySelector('.updateBtn').style.display='block';
+     
+    // updateBtn.style.display.color='red';
+    // updateBtn.style.display='block';
+
+  }
+
+  e.preventDefault();
 }
 
 function updateItemsSubmit(text,amount){
@@ -200,6 +190,7 @@ function init(){
             return false;
         }
     })
+    document.querySelector('.updateBtn').style.display='none';
     // transactions.forEach(updateTransactions);
     updateValues();
 
