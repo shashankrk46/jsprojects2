@@ -123,7 +123,6 @@ function editItems(e){
   if(e.target.classList.contains('edit-item')){
       const id=+e.target.parentNode.parentNode.id;
       
-     
       let found=null;
       transactions.forEach(item=>{
           
@@ -133,19 +132,19 @@ function editItems(e){
          return found;
         });
         
-    
+    // assign values to input fields
     console.log(found);
+   
     text.value=found.text;
     amount.value=found.amount;
 
-    // console.log(btn.className)
-
+    
+    
+    // show update transcation btn
     document.querySelector('.btn').style.display='none';
     document.querySelector('.updateBtn').style.display='block';
-     
-    // updateBtn.style.display.color='red';
-    // updateBtn.style.display='block';
-
+   
+    
   }
 
   e.preventDefault();
@@ -164,9 +163,15 @@ function updateItemsSubmit(text,amount){
     return found;
 }
 
-const updateTransactions=function(e){
+function updateTransactions(e){
+    const textValue=document.getElementById('text');
+    const amountValue=document.getElementById('amount').value;
 
-   updateItemsSubmit(text,amount)
+    console.log(textValue);
+    console.log(amountValue);
+    
+    document.querySelector('.updateBtn').style.display='none';
+    document.querySelector('.btn').style.display='block';
     e.preventDefault();
 
 }

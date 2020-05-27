@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Music player</title>
+</head>
+<body>
+    <h1>music player</h1>
+ 
+    <div class="music-container " id="music-container">
+        <div class="music-info">
+            <h4 id="title">Rocky</h4>
+            <div class="progress-container" id="progress-container">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+
+        <audio src="music/Bill Conti - Gonna Fly Now (Theme From _Rocky_) (Theme From _Rocky_).mp3" id="audio" id="cover"></audio>
+
+        <div class="img-container">
+            <img src="images/Bill Conti Gonna Fly Now.jpg" alt="music-cover">
+        </div>
+        <div class="navigation">
+            <button id="prev" class="action-btn">
+                <i class="fa fa-backward"></i>
+            </button>
+            <button id="play" class="action-btn action-btn-big">
+                <i class="fa fa-play"></i>
+            </button>
+            <button id="next" class="action-btn">
+                <i class="fa fa-forward"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
