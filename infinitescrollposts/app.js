@@ -1,34 +1,37 @@
 const postsConatainer=document.getElementById('post-container');
 const loader=document.querySelector('.loader');
-const filter=document.getElementById('.filter')
+const filter=document.getElementById('filter')
 
 let limit=5;
 let page=1;
 
-
-// async function getPosts(){
-//     const res =await fetch(`https://jsonplaceholder.typicode.com/posts`)
-//     const data=await res.json();
-//     console.log(data)
-//     return data;
-    
-// }
 function getPost(){
-fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&page=${page}`).then(res=>res.json()).then(data=>
-  data.forEach(post => {
-      const postEl=document.createElement('div');
-      postEl.classList.add('post');
-      
-      postEl.innerHTML=`
-      <div class="number">${post.id}</div>
-      <div class="post-info>
-      <h2 class="post-title">${post.title.toUpperCase()}<h2>
-      <p class="post-body">${post.body}<h2>
-      </div>
-      `;
-      postsConatainer.appendChild(postEl)
-  })
-)}
+const data=fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`)
+.then(res=>
+    res.json())
+
+   return data
+}
+
+function showPosts(){
+    getPost().then(data=>data.forEach(post => {
+                      const postEl=document.createElement('div');
+                      postEl.classList.add('post');
+                      
+                      postEl.innerHTML=`
+                      <div class="number">${post.id}</div>
+                      <div class="post-info">
+                      <h2 class="post-title">${post.title.toUpperCase()}<h2>
+                      <p class="post-body">${post.body}</p>
+                      </div>
+                      `;
+                      postsConatainer.appendChild(postEl)
+                  })
+        )
+    
+}
+
+showPosts()
 
 function showLoading(){
     loader.classList.add('show');
@@ -37,9 +40,34 @@ function showLoading(){
         loader.classList.remove('show');  
         setTimeout(()=>{
             page++;
-            getPost();
+            showPosts();
         },300)
     },1000)
+}
+
+// filter post
+
+function filterPosts(e){
+    const term=e.target.value.toUpperCase();
+    const posts=document.querySelectorAll('.post')
+    console.log(posts)
+
+    
+    posts.forEach(post=>{
+        const title=post.querySelector('.post-title').innerText.toUpperCase();
+        const body=post.querySelector('.post-body').innerText.toUpperCase();
+        
+
+        if(title.indexOf(term)>-1 || body.indexOf(term)>-1){
+            post.style.display='flex';
+
+        }else{
+            post.style.display="none"
+        }
+
+    })
+    
+
 }
 
 
@@ -47,8 +75,11 @@ getPost();
 
 window.addEventListener('scroll',()=>{
     const{scrollTop,scrollHeight,clientHeight}=document.documentElement;
-    //  console.log(Math.floor(scrollTop,scrollHeight,clientHeight))
+    
     if(scrollTop+clientHeight >=scrollHeight -5){
           showLoading()
     }
 });
+
+
+filter.addEventListener('input',filterPosts)
