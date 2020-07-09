@@ -5,16 +5,19 @@ const filter=document.getElementById('filter')
 let limit=5;
 let page=1;
 
-function getPost(){
-const data=fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`)
-.then(res=>
-    res.json())
+async function getPost(){
+const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=${limit}&_page=${page}`)
+
+const data=await res.json();
+
 
    return data
 }
 
-function showPosts(){
-    getPost().then(data=>data.forEach(post => {
+async function showPosts(){
+
+    const posts=await getPost()
+    posts.forEach(post => {
                       const postEl=document.createElement('div');
                       postEl.classList.add('post');
                       
@@ -27,7 +30,7 @@ function showPosts(){
                       `;
                       postsConatainer.appendChild(postEl)
                   })
-        )
+        
     
 }
 
