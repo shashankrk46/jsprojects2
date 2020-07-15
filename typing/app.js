@@ -9,24 +9,35 @@ const settingsForm=document.getElementById('settings-form');
 const difficultySelect=document.getElementById('difficulty');
 
 
-let limit=20;
-let words = [
-    
-];
-console.log(words)
+let limit = 5;
+let words = [];
+let singleWords=[];
 
 
-
-async function getWords(){
-    const res=await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}&`);
-     const data=await res.json();
-    return data.forEach(x=>
-    words.push(x.title))
+ 
+async function getWords() {
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/todos?_limit=${limit}`  );
+  const data = await res.json();
+  return data.forEach((x) => {
+    words.push(x.title);
+  });
 }
-getWords()
-// const words = [
+ 
+async function doGetWords() {
+    await getWords();
+ 
+  
+//   console.log(words[0])
+  const a= words.forEach(x=>
+   singleWords.push(x.split(' ')[0]))
+   return a
+    
+}
+ 
 
-// ];
+
+
 
 //   init word
 let randomWord;
@@ -67,13 +78,20 @@ function gameOver(){
     endgameEl.style.display='flex';
 }
 
-function getRandomWord(){
-    return words[Math.floor(Math.random()*words.length)]
+async function getRandomWord(){
+  await doGetWords()
+    console.log(singleWords)
+    console.log(singleWords.length)
+      
+
+    return singleWords[Math.floor(Math.random()*singleWords.length)];
+    
 
 }
 
-function addWordToDom(){
-    randomWord=getRandomWord();
+async function addWordToDom(){
+     randomWord=await getRandomWord();
+    console.log(randomWord)
     word.innerHTML=randomWord;
 }
 
@@ -116,3 +134,7 @@ settingsForm.addEventListener('change',e=>{
     difficulty=e.target.value;
     localStorage.setItem('difficulty',difficulty)
 })
+
+
+
+
