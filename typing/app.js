@@ -9,28 +9,24 @@ const settingsForm=document.getElementById('settings-form');
 const difficultySelect=document.getElementById('difficulty');
 
 
-const words = [
-    'sigh',
-    'tense',
-    'airplane',
-    'ball',
-    'pies',
-    'juice',
-    'warlike',
-    'bad',
-    'north',
-    'dependent',
-    'steer',
-    'silver',
-    'highfalutin',
-    'superficial',
-    'quince',
-    'eight',
-    'feeble',
-    'admit',
-    'drag',
-    'loving'
-  ];
+let limit=20;
+let words = [
+    
+];
+console.log(words)
+
+
+
+async function getWords(){
+    const res=await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}&`);
+     const data=await res.json();
+    return data.forEach(x=>
+    words.push(x.title))
+}
+getWords()
+// const words = [
+
+// ];
 
 //   init word
 let randomWord;
@@ -40,6 +36,12 @@ let score=0;
 
 // init time
 let time=10;
+
+let difficulty=localStorage.getItem('difficulty')!==null?localStorage.getItem('difficulty'):'easy';
+
+// set difficulty selcet value;
+
+difficultySelect.value=localStorage.getItem('difficulty')!==null?localStorage.getItem('difficulty'):'easy';
 
 text.focus();
 
@@ -91,8 +93,26 @@ text.addEventListener('input',e=>{
         updateScore();
         e.target.value=' ';
 
-        time +=2;
+        if(difficulty==='hard'){
+            time +=2;
+        }else if(difficulty==="medium"){
+            time +=3
+        }else{
+            time +=5
+        }
 
         updateTime();
     }
+})
+
+// settings btn click
+
+settingsBtn.addEventListener('click',()=>settings
+.classList.toggle('hide'));
+
+// settings select
+
+settingsForm.addEventListener('change',e=>{
+    difficulty=e.target.value;
+    localStorage.setItem('difficulty',difficulty)
 })
