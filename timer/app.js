@@ -1,4 +1,4 @@
-let a=1;
+
 
 // const start=document.querySelector('.start');
 // const pause=document.querySelector('.pause');
@@ -24,6 +24,8 @@ let a=1;
 //    const x=timer
 // clearInterval(x)
 // }
+
+
 const durationInput=document.querySelector('#duration')
 const startBtn=document.querySelector('.start');
 const pauseBtn=document.querySelector('.pause');
@@ -33,21 +35,38 @@ class Timer{
         this.durationInput=durationInput;
         this.startBtn=startBtn;
         this.pauseBtn=pauseBtn;
+        
+        
 
 
         this.startBtn.addEventListener('click',this.start)
+        this.pauseBtn.addEventListener('click',this.pause)
+        this.durationInput.addEventListener('input',this.exactTime)
+        
     }
 
     start=()=>{
-        setInterval(this.tick,1000)
+        
+        this.tick();
+       this.interval= setInterval(this.tick,1000);
+    }
+
+    pause=()=>{
+        
+         clearInterval(this.interval)
     }
 
     tick=()=>{
-        console.log(a++)
+         
+      let timeRemaining=parseFloat(this.durationInput.value );
+      this.durationInput.value=timeRemaining-1;
+         
     }
+    
+
 }
 
 const timer=new Timer(durationInput,startBtn,pauseBtn)
 
 
-startBtn.addEventListener
+
