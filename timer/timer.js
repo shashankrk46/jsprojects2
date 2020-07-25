@@ -11,21 +11,18 @@ class Timer{
         }
         
         this.startBtn.addEventListener('click',this.start)
-        this.pauseBtn.addEventListener('click',this.pause)
-  
-        
+        this.pauseBtn.addEventListener('click',this.pause)    
     }
 
     start=()=>{
         if(this.onStart){
-            this.onStart()
+            this.onStart(this.timeRemaining)
         }
         this.tick();
-       this.interval= setInterval(this.tick,50);
+       this.interval= setInterval(this.tick,20);
     }
 
     pause=()=>{
-        
          clearInterval(this.interval)
     }
 
@@ -33,13 +30,16 @@ class Timer{
         
         if(this.timeRemaining<=0){
             this.pause();
+            
+
             if(this.onComplete){
                 this.onComplete();
                }
+               location.reload();
         }else{
-            this.timeRemaining=this.timeRemaining-0.5;
+            this.timeRemaining=this.timeRemaining-.02;
             if(this.onTick){
-                this.onTick();
+                this.onTick(this.timeRemaining);
                }
         }
          
