@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css">
     <title>Timer</title>
 </head>
 <body>
-    <svg height="400" width="400" >
+
+       
+
+
+     <svg height="400" width="400" >
         <circle r="190" cx="200" cy="200"
-        fill="transparent" stroke="#1CC71C" stroke-width="15" 
+        fill="transparent" stroke="skyblue" stroke-width="15" 
         transform="rotate(-90 200 200)"/>
     </svg>
 
@@ -21,8 +29,9 @@
                <input type="text" id="duration" value="30">
             </div>
             <div class="icons">
-                <button class="start">Start</button>
-                <button class="pause">Pause</button>
+                <button class="start"><i class="fas fa-play"></i>Start</button>
+                <button class="pause"><i class="fas fa-pause"></i>Pause</button>
+                <button class="resume"><i class="far fa-play-circle"></i>Resume</button>
             </div>
         </div>
     </div>
