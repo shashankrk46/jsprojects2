@@ -5,10 +5,7 @@ const autoCompleteconfig={
         ${movie.Title} ${movie.Year}
         `;
        },
-       onOptionSelect(movie){
-           document.querySelector('.tutorial').classList.add('is-hidden')
-           onMovieSelect(movie)
-       },
+       
        inputValue(movie){
            return movie.Title
        },
@@ -31,16 +28,24 @@ const autoCompleteconfig={
 createAutoComplete({
    ...autoCompleteconfig,
    root:document.querySelector('#left-autocomplete'),
+   onOptionSelect(movie){
+    document.querySelector('.tutorial').classList.add('is-hidden')
+    onMovieSelect(movie,document.querySelector('#left-summary'))
+},
    
 });
 createAutoComplete({
    ...autoCompleteconfig,
    root:document.querySelector('#right-autocomplete'),
+   onOptionSelect(movie){
+    document.querySelector('.tutorial').classList.add('is-hidden')
+    onMovieSelect(movie,document.querySelector('#right-summary'))
+},
    
 });
 
 
-const onMovieSelect=async(movie)=>{
+const onMovieSelect=async(movie,summaryElement)=>{
     const res=await axios.get('http://www.omdbapi.com/',
     {
     params:{
@@ -48,7 +53,7 @@ const onMovieSelect=async(movie)=>{
         i:movie.imdbID,
     }
 })
-document.querySelector('#summary').innerHTML=movieTemplate(res.data)
+summaryElement.innerHTML=movieTemplate(res.data)
 
 }
 
@@ -71,10 +76,7 @@ const movieTemplate=(movieDetail)=>{
     <p class="title">${movieDetail.Awards}</p>
     <p class="subtitle">Awards</p>
     </article>
-    <article class="notification is-primary">
-    <p class="title">${movieDetail.Awards}</p>
-    <p class="subtitle">Awards</p>
-    </article>
+    
     <article class="notification is-primary">
     <p class="title">${movieDetail.BoxOffice}</p>
     <p class="subtitle">Box office</p>
