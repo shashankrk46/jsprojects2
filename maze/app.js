@@ -1,5 +1,7 @@
 const {Engine,Render,Runner,World,Bodies,MouseConstraint,Mouse}=Matter;
 
+
+const cells=3;
 const width=600;
 const height=400;
 const engine=Engine.create();
@@ -40,30 +42,27 @@ const walls=[
 
 World.add(world,walls);
 
-// random shapes
+// maze generations
 
-for(let i=0;i<10;i++){
-    if(Math.random()>0.5){
-        World.add(world,Bodies.rectangle(Math.random()*width,Math.random()*height,50,50,{
-            render:{
-                fillStyle:'red'
-            }
-        }));  
-    }else{
-        World.add(world,Bodies.circle(Math.random()*width,Math.random()*height,30,{
-            render:{
-                fillStyle:'yellow'
-            }
-        }));  
-    }
+const grid=Array(cells).fill(null).map(()=>
+    Array(cells).fill(false)
+    );
+
+    const verticals=Array(cells).fill(null).map(()=>
+    Array(cells-1).fill(false))
+    const horizontals=Array(cells-1).fill(null).map(()=>
+    Array(cells).fill(false))
     
-}
+
+const startRow=Math.floor(Math.random()*cells);
+console.log(startRow)
+const startColumn=Math.floor(Math.random()*cells);
+console.log(startColumn)
 
 
-
-
-
-
+console.log(grid);
+console.log(verticals);
+console.log(horizontals);
 
 
 
