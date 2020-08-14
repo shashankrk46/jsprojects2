@@ -10,7 +10,7 @@ const render=Render.create({
     element:document.body,
     engine:engine,
     options:{
-        wireframes:false,
+        wireframes:true,
         width,
         height
     }
@@ -18,23 +18,19 @@ const render=Render.create({
 Render.run(render);
 Runner.run(Runner.create(),engine);
 
-World.add(world,MouseConstraint.create(engine,{
-    mouse:Mouse.create(render.canvas)
-}))
-
 
 // walls
 const walls=[
-    Bodies.rectangle(300,0,600,40,{
+    Bodies.rectangle(width/2,0,width,40,{
         isStatic:true
     }),
-    Bodies.rectangle(300,400,600,40,{
+    Bodies.rectangle(width/2,height,width,40,{
         isStatic:true
     }),
-    Bodies.rectangle(0,200,40,600,{
+    Bodies.rectangle(0,height/2,40,width,{
         isStatic:true
     }),
-    Bodies.rectangle(600,200,40,600,{
+    Bodies.rectangle(width,height/2,40,width,{
         isStatic:true
     }),
     
@@ -43,6 +39,24 @@ const walls=[
 World.add(world,walls);
 
 // maze generations
+
+const shuffle=(arr)=>{
+    let counter=arr.length;
+    console.log(counter);
+
+    while(counter>0){
+        const index=Math.floor(Math.random()*counter);
+        console.log(index)
+        counter--;
+        console.log(counter--)
+
+        const temp=arr[counter];
+        console.log(temp)
+        arr[counter]=arr[index];
+        arr[index]=temp;
+    }
+    return arr;
+}
 
 const grid=Array(cells).fill(null).map(()=>
     Array(cells).fill(false)
@@ -55,14 +69,37 @@ const grid=Array(cells).fill(null).map(()=>
     
 
 const startRow=Math.floor(Math.random()*cells);
-console.log(startRow)
+
 const startColumn=Math.floor(Math.random()*cells);
-console.log(startColumn)
 
 
-console.log(grid);
-console.log(verticals);
-console.log(horizontals);
+const stepThoughCell=(row,column)=>{
+    // if i have vissited the cell at[row,column],the return 
+    if(grid[row][column]){
+        return true
+    }
+    // mark this cell as being visted
+    grid[row][column]=true;
+
+    // assemble randomly-ordered list of neighbours
+      const neighbors=shuffle([
+          [row - 1,column],
+          [row,column + 1],
+          [row + 1,column],
+          [row,column - 1]
+      ])
+      console.log(neighbors)
+    // for each neighbours
+    // see if that neighbour is out of bounds
+    // if we have visted that neighbour,contine to nect neighbour
+    // remove a wall from either horizontals or verticals
+    // visit that nect cell
+}
+// console.log(stepThoughCell(1,1))
+stepThoughCell(1,1)
+
+
+
 
 
 
